@@ -19,14 +19,9 @@ import {
   Search,
   Edit,
   Trash2,
-  FileText,
   TrendingUp,
   TrendingDown,
-  Calendar,
-  Receipt,
-  Download,
-  Upload,
-  AlertTriangle
+  Receipt
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';

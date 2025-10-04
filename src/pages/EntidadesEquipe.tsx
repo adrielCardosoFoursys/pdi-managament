@@ -26,8 +26,6 @@ import {
   Phone,
   Mail,
   MapPin,
-  User,
-  GraduationCap,
   Briefcase,
   ExternalLink
 } from 'lucide-react';

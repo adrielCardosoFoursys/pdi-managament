@@ -252,6 +252,9 @@ export interface ChecklistEncerramento {
 }
 
 // Tipos para formulários
-export type ProjetoFormData = Omit<Projeto, 'id' | 'createdAt' | 'updatedAt' | 'tenantId'>;
+export type ProjetoFormData = Omit<Projeto, 'id' | 'createdAt' | 'updatedAt' | 'tenantId' | 'dataInicio' | 'dataFim'> & {
+  dataInicio: string;
+  dataFim: string;
+};
 export type EntidadeFormData = Omit<Entidade, 'id' | 'projetoId'>;
 export type MembroEquipeFormData = Omit<MembroEquipe, 'id' | 'projetoId'>;

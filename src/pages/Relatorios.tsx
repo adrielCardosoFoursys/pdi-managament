@@ -119,7 +119,6 @@ export function Relatorios() {
   const evolucaoMensal = generateEvolucaoMensal();
   const statusDistribution = generateStatusDistribution();
 
-  const COLORS = ['#22c55e', '#f59e0b', '#3b82f6', '#ef4444'];
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('pt-BR', {

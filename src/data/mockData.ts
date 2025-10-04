@@ -1,6 +1,6 @@
 // Dados mock para desenvolvimento do frontend
 
-import { 
+import type { 
   FaseInovacao, 
   Segmento, 
   Tema, 

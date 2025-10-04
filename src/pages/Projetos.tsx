@@ -3,7 +3,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ProjetoForm } from '@/components/forms/ProjetoForm';
 import { projetos as projetosMock } from '@/data/mockData';
 import { 
@@ -41,9 +40,25 @@ export function Projetos() {
     return matchesSearch && matchesStatus;
   });
 
+  const convertFormDataToProjeto = (data: ProjetoFormData): Omit<Projeto, 'id' | 'tenantId' | 'createdAt' | 'updatedAt'> => {
+    return {
+      ...data,
+      dataInicio: new Date(data.dataInicio),
+      dataFim: new Date(data.dataFim),
+    };
+  };
+
+  const convertProjetoToFormData = (projeto: Projeto): ProjetoFormData => {
+    return {
+      ...projeto,
+      dataInicio: projeto.dataInicio.toISOString().split('T')[0],
+      dataFim: projeto.dataFim.toISOString().split('T')[0],
+    };
+  };
+
   const handleCreateProjeto = (data: ProjetoFormData) => {
     const newProjeto: Projeto = {
-      ...data,
+      ...convertFormDataToProjeto(data),
       id: Date.now().toString(),
       tenantId: '1',
       createdAt: new Date(),
@@ -58,7 +73,7 @@ export function Projetos() {
     
     const updatedProjeto: Projeto = {
       ...selectedProjeto,
-      ...data,
+      ...convertFormDataToProjeto(data),
       updatedAt: new Date(),
     };
     
@@ -300,30 +315,7 @@ export function Projetos() {
               </DialogTitle>
             </DialogHeader>
             <ProjetoForm
-              projeto={selectedProjeto ? {
-                titulo: selectedProjeto.titulo,
-                codigoANEEL: selectedProjeto.codigoANEEL,
-                faseInovacaoId: selectedProjeto.faseInovacaoId,
-                segmentoId: selectedProjeto.segmentoId,
-                temaId: selectedProjeto.temaId,
-                tipoProdutoId: selectedProjeto.tipoProdutoId,
-                subtemaId: selectedProjeto.subtemaId,
-                temaEstrategicoId: selectedProjeto.temaEstrategicoId,
-                dataInicio: selectedProjeto.dataInicio,
-                dataFim: selectedProjeto.dataFim,
-                dataEncerramentoReal: selectedProjeto.dataEncerramentoReal,
-                duracao: selectedProjeto.duracao,
-                prorrogacao: selectedProjeto.prorrogacao,
-                escopo: selectedProjeto.escopo,
-                produtos: selectedProjeto.produtos,
-                status: selectedProjeto.status,
-                prioridade: selectedProjeto.prioridade,
-                percentualEvolucao: selectedProjeto.percentualEvolucao,
-                custoTotalPrevisto: selectedProjeto.custoTotalPrevisto,
-                custoExecutado: selectedProjeto.custoExecutado,
-                custoPrevisto: selectedProjeto.custoPrevisto,
-                principalResponsavel: selectedProjeto.principalResponsavel,
-              } : undefined}
+              projeto={selectedProjeto ? convertProjetoToFormData(selectedProjeto) : undefined}
               onSubmit={selectedProjeto ? handleUpdateProjeto : handleCreateProjeto}
               onCancel={() => {
                 setIsFormOpen(false);
